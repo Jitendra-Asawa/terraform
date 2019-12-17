@@ -36,6 +36,14 @@ resource "aws_instance" "ec2-test-instance" {
     Name = "ec2-test-instance"
   }
 
+}
+
+# Changing the value in the block "triggers" will help in remote execution of the 
+# bash script everytime on the aws-instance as null-resource will be recreated everytime
+resource "null_resource" "test-null-resource" {
+  triggers = {
+    value = "${timestamp()}",
+  }
   provisioner "local-exec" {
     command = "echo 'aws_instance local-exec working'"
   }
